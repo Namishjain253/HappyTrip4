@@ -1,18 +1,11 @@
-pipeline {
-  agent {
-    node {
-      label "master"
+node {
+  stage('SCM') {
+    git 'https://github.com/Debadutta-Pradhan/HappyTrip4.git'
+  }
+  stage('SonarQube analysis') {
+    def scannerHome = tool 'SonarScanner 4.0';
+    withSonarQubeEnv('My SonarQube Server') { // If you have configured more than one global server connection, you can specify its name
+      bat "${Happytrip}/bin/sonar-scanner"
     }
   }
-
-  stages {
-    stage("SonarQube analysis") {
-       steps {
-          script {
-              def sonarScanner = tool name: 'SonarQube', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-              bat "${sonarScanner}/bin/sonar-scanner -e -Dsonar.host.url=https://github.com/Debadutta-Pradhan/HappyTrip4.git"
-            }
-         }
-      }
-    }
-  }
+}
