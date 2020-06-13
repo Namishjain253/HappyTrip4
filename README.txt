@@ -3,9 +3,9 @@ node {
     git 'https://github.com/Debadutta-Pradhan/HappyTrip4.git'
   }
   stage('SonarQube analysis') {
-    def scannerHome = tool 'SonarScanner 4.0';
-    withSonarQubeEnv('My SonarQube Server') { // If you have configured more than one global server connection, you can specify its name
-      bat "${HappyTrip}/bin/sonar-scanner"
+    withSonarQubeEnv(credentialsId: 'd96363fe0bce1e5a3febf67cb9f42f755212a841', installationName: 'My SonarQube Server') { // You can override the credential to be used
+      sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar'
     }
   }
 }
+
