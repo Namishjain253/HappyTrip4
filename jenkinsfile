@@ -25,27 +25,6 @@ stage('SonarQube') {
                 '''
 }
 }
-/*stage('Build'){
-       tools{
-        jdk 'jdk1.8'
-        maven 'apache-maven-3.6.3'
-        }
-            steps {
-            bat '''
-                    cd happytrip-code
-                    java -version
-                    mvn -version
-                    mvn clean package
-            '''
-        }
-}
-
-stage('Deploy') {
-                  steps{
-				echo "Deploying"
-				deploy adapters: [tomcat7(credentialsId: '872bc9ca-16ec-4486-b602-5daf45d5716b', path: '', url: 'http://localhost:8090')], contextPath: 'happytrips', war: '**/*.war'
-		}
-}*/
 }
 }
 
