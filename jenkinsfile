@@ -1,0 +1,52 @@
+pipeline {
+ agent any
+stages {
+stage('SCM') {
+    steps {
+    git 'https://github.com/Debadutta-Pradhan/HappyTrip4.git'
+    }
+  }
+stage("Building SONAR ...") {
+  steps {
+ bat '''
+        cd happytrip-code
+        mvn clean install
+    '''
+}
+}
+stage('SonarQube') {
+             steps {
+                bat '''
+                    cd happytrip-code
+                  mvn sonar:sonar \
+                          -Dsonar.projectKey=186ff1c937cbd8e4334413f9512ac2860973d79c \
+                          -Dsonar.host.url=http://localhost:9000 \
+                          -Dsonar.login=7c8f06e9919bef784b20055108989b17dfdc85c2
+                '''
+}
+}
+/*stage('Build'){
+       tools{
+        jdk 'jdk1.8'
+        maven 'apache-maven-3.6.3'
+        }
+            steps {
+            bat '''
+                    cd happytrip-code
+                    java -version
+                    mvn -version
+                    mvn clean package
+            '''
+        }
+}
+
+stage('Deploy') {
+                  steps{
+				echo "Deploying"
+				deploy adapters: [tomcat7(credentialsId: '872bc9ca-16ec-4486-b602-5daf45d5716b', path: '', url: 'http://localhost:8090')], contextPath: 'happytrips', war: '**/*.war'
+		}
+}*/
+}
+}
+
+
