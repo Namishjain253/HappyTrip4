@@ -49,17 +49,6 @@ stage('Deploy') {
 				deploy adapters: [tomcat7(credentialsId: 'd8511587-aae6-4afd-ad92-782639ac4b60', path: '', url: 'http://localhost:8090')], contextPath: 'happytrip', war: '**/*.war'
 		}
 }
-post {
-        always {
-            //archiveArtifacts artifacts: 'generatedFile.log', onlyIfSuccessful: true
-          
-            emailext attachLog: true,
-                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
-                recipientProviders: [developers(), requestor()],
-                subject: "Jenkins Build :- ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
-            
-        }
-    }
 }
 }
 
