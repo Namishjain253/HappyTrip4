@@ -3,13 +3,13 @@ pipeline {
   stages {
     stage('SCM') {
       steps {
-         git 'https://github.com/Debadutta-Pradhan/HappyTrip4.git'
+         git 'https://github.com/Namishjain253/HappyTrip4.git'
        }
     }
    stage("Build") {
     tools{
-        jdk 'Jdk_1.8'
-        maven 'apache-maven-3.6.3'
+        jdk 'JAVA_HOME'
+        maven 'MAVEN_HOME'
         }
      steps {
     bat '''
@@ -22,7 +22,7 @@ pipeline {
        '''
    }
    }
-   stage('SonarQube') {
+  /* stage('SonarQube') {
                 steps {
                    bat '''
                        cd happytrip-code
@@ -42,11 +42,12 @@ pipeline {
                     sleep time: deploymentDelay.toInteger(), unit: 'HOURS'
                 }
             }
-        }
+        }*/
 stage('Deploy') {
                   steps{
 				echo "Deploying"
-				deploy adapters: [tomcat7(credentialsId: 'd8511587-aae6-4afd-ad92-782639ac4b60', path: '', url: 'http://localhost:8090')], contextPath: 'happytrip', war: '**/*.war'
+				deploy adapters: [tomcat9(credentialsId: '476ef20f-d63d-420a-aef1-4a3ddfa1a9c4', path: '', url: 'http://localhost:8080')], contextPath: 'happytrip', war: '**/*.war'
+				//deploy adapters: [tomcat7(credentialsId: 'd8511587-aae6-4afd-ad92-782639ac4b60', path: '', url: 'http://localhost:8090')], contextPath: 'happytrip', war: '**/*.war'
 		}
 }
 }
